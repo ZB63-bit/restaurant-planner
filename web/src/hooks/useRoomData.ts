@@ -9,6 +9,9 @@ import {
   getRoomId,
   setRoomId as persistRoomId,
   clearRoomId,
+  getSavedRooms,
+  saveRoom,
+  type SavedRoom,
 } from "../lib/identity";
 import type {
   Room,
@@ -56,6 +59,7 @@ export function useRoomData() {
   const [data, setData] = useState<RawData>(EMPTY);
   const [loading, setLoading] = useState(true);
   const [displayName, setName] = useState(getDisplayName());
+  const [savedRooms, setSavedRooms] = useState<SavedRoom[]>(() => getSavedRooms());
 
   const refresh = useCallback(async (rid: string): Promise<boolean> => {
     const [room, members, suggestions, votes, schedule, history] =
@@ -117,6 +121,8 @@ export function useRoomData() {
       setName(name);
       const room = await repo.createRoom(roomName, userId, name);
       persistRoomId(room.id);
+      saveRoom(room.id, room.room_name, room.room_code);
+      setSavedRooms(getSavedRooms());
       setRoomId(room.id);
     },
     [userId],
@@ -129,6 +135,8 @@ export function useRoomData() {
         setDisplayName(name);
         setName(name);
         persistRoomId(result.room.id);
+        saveRoom(result.room.id, result.room.room_name, result.room.room_code);
+        setSavedRooms(getSavedRooms());
         setRoomId(result.room.id);
       }
       return result;
@@ -139,6 +147,11 @@ export function useRoomData() {
   const leaveRoom = useCallback(() => {
     clearRoomId();
     setRoomId(null);
+  }, []);
+
+  const switchRoom = useCallback((id: string) => {
+    persistRoomId(id);
+    setRoomId(id);
   }, []);
 
   // --- Derived views ---
@@ -236,9 +249,11 @@ export function useRoomData() {
     scheduleByDay,
     userId,
     displayName,
+    savedRooms,
     createRoom,
     joinRoom,
     leaveRoom,
+    switchRoom,
     ...actions,
   };
 }

@@ -85,6 +85,36 @@ export default function SettingsPage({ data }: { data: RoomData }) {
 
   return (
     <div className="space-y-3 p-4">
+      {data.savedRooms.length > 1 && (
+        <Section title="My Rooms">
+          <ul className="space-y-2">
+            {data.savedRooms.map((r) => {
+              const isCurrent = r.id === data.room?.id;
+              return (
+                <li key={r.id} className="flex items-center justify-between gap-3">
+                  <div className="min-w-0">
+                    <p className="truncate text-sm font-medium">{r.name}</p>
+                    <p className="font-mono text-xs text-slate-400">{r.code}</p>
+                  </div>
+                  {isCurrent ? (
+                    <span className="shrink-0 rounded-full bg-emerald-50 px-2.5 py-0.5 text-xs font-medium text-emerald-600">
+                      Current
+                    </span>
+                  ) : (
+                    <button
+                      onClick={() => data.switchRoom(r.id)}
+                      className="shrink-0 rounded-lg border border-slate-200 px-3 py-1 text-xs font-medium text-slate-600 transition-colors duration-150 active:scale-[0.97] pointer-fine:hover:bg-slate-50"
+                    >
+                      Switch
+                    </button>
+                  )}
+                </li>
+              );
+            })}
+          </ul>
+        </Section>
+      )}
+
       <Section title="Room">
         <p className="font-semibold">{data.room?.room_name}</p>
         <p className="text-sm text-slate-500">

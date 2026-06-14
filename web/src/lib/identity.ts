@@ -6,6 +6,13 @@
 const USER_ID_KEY = "rp_user_id";
 const DISPLAY_NAME_KEY = "rp_display_name";
 const ROOM_ID_KEY = "rp_room_id";
+const SAVED_ROOMS_KEY = "rp_saved_rooms";
+
+export interface SavedRoom {
+  id: string;
+  name: string;
+  code: string;
+}
 
 export function uuid(): string {
   // crypto.randomUUID is available in all modern browsers and Node 24.
@@ -39,4 +46,18 @@ export function setRoomId(roomId: string): void {
 
 export function clearRoomId(): void {
   localStorage.removeItem(ROOM_ID_KEY);
+}
+
+export function getSavedRooms(): SavedRoom[] {
+  try {
+    return JSON.parse(localStorage.getItem(SAVED_ROOMS_KEY) ?? "[]");
+  } catch {
+    return [];
+  }
+}
+
+export function saveRoom(id: string, name: string, code: string): void {
+  const rooms = getSavedRooms().filter((r) => r.id !== id);
+  rooms.unshift({ id, name, code });
+  localStorage.setItem(SAVED_ROOMS_KEY, JSON.stringify(rooms));
 }
