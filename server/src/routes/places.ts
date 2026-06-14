@@ -118,7 +118,7 @@ export function placesRouter(): Router {
     const textQuery = !hasCoords && city ? `${q} in ${city}` : q;
     // 7 miles in metres
     const RADIUS_M = 11_265;
-    const locationRestriction = hasCoords
+    const locationBias = hasCoords
       ? { circle: { center: { latitude: lat, longitude: lng }, radius: RADIUS_M } }
       : undefined;
     try {
@@ -132,7 +132,7 @@ export function placesRouter(): Router {
         body: JSON.stringify({
           textQuery,
           includedType: "restaurant",
-          ...(locationRestriction && { locationRestriction }),
+          ...(locationBias && { locationBias }),
         }),
       });
       if (!r.ok) {
