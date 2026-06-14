@@ -35,3 +35,8 @@ body {
 /* Remove the browser's native disclosure triangle — we use our own ▸ */
 summary::-webkit-details-marker { display: none; }
 summary::marker { display: none; }
+
+/* Prevent iOS Safari from zooming in when tapping inputs */
+input, select, textarea {
+  font-size: max(16px, 1em);
+}
