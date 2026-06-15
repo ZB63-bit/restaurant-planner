@@ -5,6 +5,7 @@ import { Meta } from "./MetaBits";
 
 interface Props {
   onAdd: (input: NewSuggestion) => void;
+  existingNames?: Set<string>;
 }
 
 function toNewSuggestion(r: PlaceResult): NewSuggestion {
@@ -19,13 +20,12 @@ function toNewSuggestion(r: PlaceResult): NewSuggestion {
   };
 }
 
-export default function SearchBar({ onAdd }: Props) {
+export default function SearchBar({ onAdd, existingNames }: Props) {
   const [q, setQ] = useState("");
   const [city, setCity] = useState("");
   const [results, setResults] = useState<PlaceResult[] | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [added] = useState<Set<string>>(new Set());
   const [coords, setCoords] = useState<{ lat: number; lng: number } | null>(null);
   const abortRef = useRef<AbortController | null>(null);
 
@@ -192,13 +192,22 @@ export default function SearchBar({ onAdd }: Props) {
                   <p className="truncate text-xs text-slate-400">{r.address}</p>
                 )}
               </div>
-              <button
-                onClick={() => add(r)}
-                disabled={added.has(r.place_id)}
-                className="shrink-0 rounded-lg px-3 py-1.5 text-sm font-medium transition-[transform,background-color] duration-150 active:scale-[0.95] disabled:cursor-default pointer-fine:hover:bg-brand-dark disabled:bg-emerald-500 disabled:text-white bg-brand text-white"
-              >
-                {added.has(r.place_id) ? "Added ✓" : "Add"}
-              </button>
+              {(() => {
+                const inList = existingNames?.has(r.name.trim().toLowerCase()) ?? false;
+                return (
+                  <button
+                    onClick={() => !inList && add(r)}
+                    disabled={inList}
+                    className={`shrink-0 rounded-lg px-3 py-1.5 text-sm font-medium transition-[transform,background-color] duration-150 active:scale-[0.95] disabled:cursor-default ${
+                      inList
+                        ? "bg-slate-100 text-slate-400"
+                        : "bg-brand text-white pointer-fine:hover:bg-brand-dark"
+                    }`}
+                  >
+                    {inList ? "In list" : "Add"}
+                  </button>
+                );
+              })()}
             </div>
           ))}
         </div>

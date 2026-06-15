@@ -33,7 +33,7 @@ export default function SuggestionsPage({ data }: { data: RoomData }) {
 
   return (
     <div className="space-y-3 p-4">
-      <SearchBar onAdd={data.addSuggestion} />
+      <SearchBar onAdd={data.addSuggestion} existingNames={data.suggestionNames} />
       <details className="text-sm">
         <summary className="cursor-pointer select-none text-slate-400 transition-colors duration-150 pointer-fine:hover:text-slate-600">
           ▸ Add manually instead

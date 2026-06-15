@@ -167,6 +167,11 @@ export function useRoomData() {
     [data.schedule],
   );
 
+  const suggestionNames = useMemo(
+    () => new Set(data.suggestions.map((s) => s.name.trim().toLowerCase())),
+    [data.suggestions],
+  );
+
   const queue: SuggestionWithVote[] = useMemo(() => {
     const myVotes = new Map(
       data.votes
@@ -203,6 +208,7 @@ export function useRoomData() {
     () => ({
       addSuggestion: async (input: NewSuggestion) => {
         if (!roomId) return;
+        if (suggestionNames.has(input.name.trim().toLowerCase())) return;
         await repo.addSuggestion(roomId, userId, input);
         await reload();
         void notifyRoom(roomId, userId, "New suggestion", `${input.name} was added to the queue`, "rp-suggestion");
@@ -248,6 +254,7 @@ export function useRoomData() {
     history: data.history,
     queue,
     scheduleByDay,
+    suggestionNames,
     userId,
     displayName,
     savedRooms,
