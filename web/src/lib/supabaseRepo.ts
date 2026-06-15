@@ -59,11 +59,10 @@ export class SupabaseRepo implements Repo {
         throw error;
       }
       const room = data as Room;
-      await db().from("members").insert({
-        id: memberId,
-        room_id: room.id,
-        display_name: displayName.trim() || "Me",
-      });
+      await db().from("members").upsert(
+        { id: memberId, room_id: room.id, display_name: displayName.trim() || "Me" },
+        { onConflict: "id" },
+      );
       return room;
     }
     throw new Error("Could not generate a unique room code.");
