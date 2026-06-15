@@ -28,12 +28,12 @@ export function Meta({
   if (cuisine) parts.push(<span key="c">{cuisine}</span>);
   if (rating != null) parts.push(<Rating key="r" value={rating} />);
   const p = priceLabel(price);
-  if (p) parts.push(<span key="p" className="text-emerald-700">{p}</span>);
+  if (p) parts.push(<span key="p" className="text-emerald-700 dark:text-emerald-400">{p}</span>);
   return (
-    <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5 text-sm text-slate-500">
+    <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5 text-sm text-slate-500 dark:text-slate-400">
       {parts.map((node, i) => (
         <span key={i} className="flex items-center gap-2">
-          {i > 0 && <span className="text-slate-300">·</span>}
+          {i > 0 && <span className="text-slate-300 dark:text-slate-600">·</span>}
           {node}
         </span>
       ))}

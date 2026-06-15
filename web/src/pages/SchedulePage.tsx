@@ -18,10 +18,10 @@ function SlotView({
   if (!entry) {
     return (
       <div className="flex items-center justify-between px-1 py-1">
-        <span className="text-xs font-medium uppercase tracking-wide text-slate-300">
+        <span className="text-xs font-medium uppercase tracking-wide text-slate-300 dark:text-slate-600">
           {label}
         </span>
-        <span className="text-xs text-slate-300">Nothing planned</span>
+        <span className="text-xs text-slate-300 dark:text-slate-600">Nothing planned</span>
       </div>
     );
   }
@@ -31,16 +31,16 @@ function SlotView({
     <div
       className={`rounded-lg border px-3 py-2 transition-colors duration-200 ${
         entry.is_visited
-          ? "border-emerald-200 bg-emerald-50"
-          : "border-slate-200 bg-white"
+          ? "border-emerald-200 bg-emerald-50 dark:border-emerald-800 dark:bg-emerald-900/20"
+          : "border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-700"
       }`}
     >
       <div className="flex items-center justify-between">
-        <span className="text-xs font-medium uppercase tracking-wide text-slate-400">
+        <span className="text-xs font-medium uppercase tracking-wide text-slate-400 dark:text-slate-500">
           {label}
         </span>
         {entry.is_visited && (
-          <span className="text-xs font-semibold text-emerald-600">✓ Visited</span>
+          <span className="text-xs font-semibold text-emerald-600 dark:text-emerald-400">✓ Visited</span>
         )}
       </div>
       {s?.maps_url ? (
@@ -67,7 +67,7 @@ function SlotView({
         )}
         <button
           onClick={() => data.clearSlot(day, slot)}
-          className="rounded-md px-2 py-1 text-xs text-slate-400 transition-[transform,background-color,color] duration-150 active:scale-[0.96] pointer-fine:hover:bg-rose-50 pointer-fine:hover:text-rose-500"
+          className="rounded-md px-2 py-1 text-xs text-slate-400 dark:text-slate-500 transition-[transform,background-color,color] duration-150 active:scale-[0.96] pointer-fine:hover:bg-rose-50 pointer-fine:hover:text-rose-500 dark:pointer-fine:hover:bg-rose-900/20 dark:pointer-fine:hover:text-rose-400"
         >
           Clear
         </button>
@@ -84,9 +84,9 @@ export default function SchedulePage({ data }: { data: RoomData }) {
       {data.scheduleByDay.map(({ day, primary, backup }) => (
         <div
           key={day}
-          className="space-y-1 rounded-xl border border-slate-200 bg-white p-3 shadow-sm"
+          className="space-y-1 rounded-xl border border-slate-200 bg-white p-3 shadow-sm dark:border-slate-700 dark:bg-slate-800 dark:shadow-none"
         >
-          <h3 className="mb-1.5 text-sm font-bold text-slate-700">{dayTitle(day)}</h3>
+          <h3 className="mb-1.5 text-sm font-bold text-slate-700 dark:text-slate-200">{dayTitle(day)}</h3>
           <SlotView label="Primary" data={data} entry={primary} day={day} slot="primary" />
           <SlotView label="Backup" data={data} entry={backup} day={day} slot="backup" />
         </div>

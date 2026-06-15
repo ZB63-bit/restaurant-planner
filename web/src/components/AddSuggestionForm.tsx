@@ -41,7 +41,7 @@ export default function AddSuggestionForm({ onAdd }: Props) {
     return (
       <button
         onClick={() => setOpen(true)}
-        className="w-full rounded-xl border-2 border-dashed border-slate-300 py-3 text-sm font-medium text-slate-500 hover:border-brand hover:text-brand"
+        className="w-full rounded-xl border-2 border-dashed border-slate-300 py-3 text-sm font-medium text-slate-500 hover:border-brand hover:text-brand dark:border-slate-600 dark:text-slate-400"
       >
         + Add a restaurant
       </button>
@@ -49,12 +49,12 @@ export default function AddSuggestionForm({ onAdd }: Props) {
   }
 
   const field =
-    "w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-brand focus:outline-none";
+    "w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-slate-600 dark:bg-slate-800 dark:text-slate-100";
 
   return (
     <form
       onSubmit={submit}
-      className="space-y-2 rounded-xl border border-slate-200 bg-white p-3 shadow-sm"
+      className="space-y-2 rounded-xl border border-slate-200 bg-white p-3 shadow-sm dark:border-slate-700 dark:bg-slate-800 dark:shadow-none"
     >
       <input
         autoFocus
@@ -111,7 +111,7 @@ export default function AddSuggestionForm({ onAdd }: Props) {
             reset();
             setOpen(false);
           }}
-          className="rounded-lg border border-slate-300 px-4 py-2 text-sm text-slate-600"
+          className="rounded-lg border border-slate-300 px-4 py-2 text-sm text-slate-600 dark:border-slate-600 dark:text-slate-300"
         >
           Cancel
         </button>

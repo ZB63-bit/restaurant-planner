@@ -1,5 +1,6 @@
 import { NavLink, Navigate, Route, Routes } from "react-router-dom";
 import { useRoomData } from "./hooks/useRoomData";
+import { useDarkMode } from "./hooks/useDarkMode";
 import JoinPage from "./pages/JoinPage";
 import SuggestionsPage from "./pages/SuggestionsPage";
 import SchedulePage from "./pages/SchedulePage";
@@ -53,6 +54,7 @@ const NAV = [
 ];
 
 export default function App() {
+  useDarkMode();
   const data = useRoomData();
 
   if (data.loading) {
@@ -76,10 +78,10 @@ export default function App() {
 
   return (
     <div className="mx-auto flex h-full max-w-xl flex-col">
-      <header className="flex items-center justify-between border-b border-slate-200 bg-white px-4 py-3">
+      <header className="flex items-center justify-between border-b border-slate-200 bg-white px-4 py-3 dark:border-slate-700 dark:bg-slate-800">
         <div>
           <h1 className="text-lg font-bold text-brand">Restaurant Planner</h1>
-          <p className="text-xs text-slate-500">
+          <p className="text-xs text-slate-500 dark:text-slate-400">
             {data.room ? data.room.room_name : "Loading…"}
           </p>
         </div>
@@ -95,14 +97,14 @@ export default function App() {
         </Routes>
       </main>
 
-      <nav className="fixed inset-x-0 bottom-0 mx-auto flex max-w-xl border-t border-slate-200 bg-white">
+      <nav className="fixed inset-x-0 bottom-0 mx-auto flex max-w-xl border-t border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-800">
         {NAV.map((item) => (
           <NavLink
             key={item.to}
             to={item.to}
             className={({ isActive }) =>
               `flex flex-1 flex-col items-center gap-0.5 py-2 text-xs transition-colors duration-150 active:scale-[0.97] ${
-                isActive ? "text-brand" : "text-slate-400 pointer-fine:hover:text-slate-600"
+                isActive ? "text-brand" : "text-slate-400 dark:text-slate-500 pointer-fine:hover:text-slate-600 dark:pointer-fine:hover:text-slate-300"
               }`
             }
           >

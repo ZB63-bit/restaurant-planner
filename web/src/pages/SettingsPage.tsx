@@ -16,8 +16,8 @@ function Section({
   children: React.ReactNode;
 }) {
   return (
-    <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
-      <h3 className="mb-2 text-sm font-bold uppercase tracking-wide text-slate-500">
+    <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-700 dark:bg-slate-800 dark:shadow-none">
+      <h3 className="mb-2 text-sm font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400">
         {title}
       </h3>
       {children}
@@ -97,13 +97,13 @@ export default function SettingsPage({ data }: { data: RoomData }) {
                     <p className="font-mono text-xs text-slate-400">{r.code}</p>
                   </div>
                   {isCurrent ? (
-                    <span className="shrink-0 rounded-full bg-emerald-50 px-2.5 py-0.5 text-xs font-medium text-emerald-600">
+                    <span className="shrink-0 rounded-full bg-emerald-50 px-2.5 py-0.5 text-xs font-medium text-emerald-600 dark:bg-emerald-900/20 dark:text-emerald-400">
                       Current
                     </span>
                   ) : (
                     <button
                       onClick={() => data.switchRoom(r.id)}
-                      className="shrink-0 rounded-lg border border-slate-200 px-3 py-1 text-xs font-medium text-slate-600 transition-colors duration-150 active:scale-[0.97] pointer-fine:hover:bg-slate-50"
+                      className="shrink-0 rounded-lg border border-slate-200 px-3 py-1 text-xs font-medium text-slate-600 transition-colors duration-150 active:scale-[0.97] pointer-fine:hover:bg-slate-50 dark:border-slate-700 dark:text-slate-300 dark:pointer-fine:hover:bg-slate-700"
                     >
                       Switch
                     </button>
@@ -117,16 +117,16 @@ export default function SettingsPage({ data }: { data: RoomData }) {
 
       <Section title="Room">
         <p className="font-semibold">{data.room?.room_name}</p>
-        <p className="text-sm text-slate-500">
+        <p className="text-sm text-slate-500 dark:text-slate-400">
           Code: <span className="font-mono">{data.room?.room_code}</span>
         </p>
         <div className="mt-3">
-          <p className="mb-1 text-xs text-slate-400">Invite link</p>
+          <p className="mb-1 text-xs text-slate-400 dark:text-slate-500">Invite link</p>
           <div className="flex gap-2">
             <input
               readOnly
               value={joinLink}
-              className="flex-1 truncate rounded-lg border border-slate-200 bg-slate-50 px-2 py-1.5 text-xs text-slate-600"
+              className="flex-1 truncate rounded-lg border border-slate-200 bg-slate-50 px-2 py-1.5 text-xs text-slate-600 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300"
             />
             <button
               onClick={copyLink}
@@ -145,7 +145,7 @@ export default function SettingsPage({ data }: { data: RoomData }) {
               <span className="inline-block h-2 w-2 rounded-full bg-emerald-500" />
               {m.display_name}
               {m.id === data.userId && (
-                <span className="text-xs text-slate-400">(you)</span>
+                <span className="text-xs text-slate-400 dark:text-slate-500">(you)</span>
               )}
             </li>
           ))}
@@ -154,18 +154,18 @@ export default function SettingsPage({ data }: { data: RoomData }) {
 
       <Section title="Notifications">
         {!supported ? (
-          <p className="text-sm text-slate-400">
+          <p className="text-sm text-slate-400 dark:text-slate-500">
             Push notifications aren't supported in this browser. On iOS, add
             the app to your Home Screen and open it from there (Safari 16.4+).
           </p>
         ) : permission === "denied" ? (
-          <p className="text-sm text-slate-400">
+          <p className="text-sm text-slate-400 dark:text-slate-500">
             Notifications are blocked. Open your browser settings and allow
             notifications for this site, then reload.
           </p>
         ) : (
           <div className="space-y-2">
-            <p className="text-sm text-slate-500">
+            <p className="text-sm text-slate-500 dark:text-slate-400">
               Get notified when someone adds a suggestion or updates the
               schedule.
             </p>
@@ -175,7 +175,7 @@ export default function SettingsPage({ data }: { data: RoomData }) {
                 disabled={pushBusy}
                 className={`rounded-lg px-3 py-1.5 text-sm font-medium transition-colors ${
                   subscribed
-                    ? "border border-slate-200 text-slate-600 hover:bg-slate-50"
+                    ? "border border-slate-200 text-slate-600 hover:bg-slate-50 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-700"
                     : "bg-brand text-white hover:bg-brand-dark"
                 } disabled:opacity-50`}
               >
@@ -185,7 +185,7 @@ export default function SettingsPage({ data }: { data: RoomData }) {
                 <button
                   onClick={testPush}
                   disabled={testSent}
-                  className="text-sm text-slate-400 underline hover:text-slate-600 disabled:opacity-50"
+                  className="text-sm text-slate-400 underline hover:text-slate-600 disabled:opacity-50 dark:text-slate-500 dark:hover:text-slate-300"
                 >
                   {testSent ? "Sent!" : "Send test"}
                 </button>
@@ -196,14 +196,14 @@ export default function SettingsPage({ data }: { data: RoomData }) {
       </Section>
 
       <Section title="About">
-        <p className="text-sm text-slate-500">
+        <p className="text-sm text-slate-500 dark:text-slate-400">
           You are <span className="font-medium">{data.displayName}</span> on
           this device. Clearing browser data or switching devices means
           rejoining as a new person.
         </p>
         <button
           onClick={data.leaveRoom}
-          className="mt-3 rounded-lg border border-rose-200 px-3 py-1.5 text-sm font-medium text-rose-600 hover:bg-rose-50"
+          className="mt-3 rounded-lg border border-rose-200 px-3 py-1.5 text-sm font-medium text-rose-600 hover:bg-rose-50 dark:border-rose-800 dark:text-rose-400 dark:hover:bg-rose-900/20"
         >
           Leave room
         </button>

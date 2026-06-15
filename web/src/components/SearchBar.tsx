@@ -104,7 +104,7 @@ export default function SearchBar({ onAdd, existingNames }: Props) {
         {/* Query input with inline loading/clear controls */}
         <div className="relative flex-1">
           <input
-            className="w-full rounded-lg border border-slate-200 py-2 pl-3 pr-8 text-sm transition-colors duration-150 focus:border-brand focus:outline-none"
+            className="w-full rounded-lg border border-slate-200 py-2 pl-3 pr-8 text-sm transition-colors duration-150 focus:border-brand focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100"
             placeholder="Search restaurants…"
             value={q}
             onChange={(e) => setQ(e.target.value)}
@@ -147,7 +147,7 @@ export default function SearchBar({ onAdd, existingNames }: Props) {
         </div>
 
         <input
-          className="w-24 rounded-lg border border-slate-200 px-3 py-2 text-sm transition-colors duration-150 focus:border-brand focus:outline-none"
+          className="w-24 rounded-lg border border-slate-200 px-3 py-2 text-sm transition-colors duration-150 focus:border-brand focus:outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100"
           placeholder="City"
           value={city}
           onChange={(e) => setCity(e.target.value)}
@@ -156,21 +156,21 @@ export default function SearchBar({ onAdd, existingNames }: Props) {
       </div>
 
       {error && (
-        <p className="rounded-lg bg-rose-50 px-3 py-2 text-sm text-rose-600">
+        <p className="rounded-lg bg-rose-50 px-3 py-2 text-sm text-rose-600 dark:bg-rose-900/20 dark:text-rose-400">
           {error}
         </p>
       )}
 
       {results && results.length === 0 && !loading && (
-        <p className="px-1 text-sm text-slate-400">No results for "{q}".</p>
+        <p className="px-1 text-sm text-slate-400 dark:text-slate-500">No results for "{q}".</p>
       )}
 
       {results && results.length > 0 && (
-        <div className="space-y-1 rounded-xl border border-slate-200 bg-white p-2 shadow-sm">
+        <div className="space-y-1 rounded-xl border border-slate-200 bg-white p-2 shadow-sm dark:border-slate-700 dark:bg-slate-800 dark:shadow-none">
           {results.map((r) => (
             <div
               key={r.place_id}
-              className="flex items-center gap-3 rounded-lg p-1.5 transition-colors duration-150 pointer-fine:hover:bg-slate-50"
+              className="flex items-center gap-3 rounded-lg p-1.5 transition-colors duration-150 pointer-fine:hover:bg-slate-50 dark:pointer-fine:hover:bg-slate-700"
             >
               {r.photo_url ? (
                 <img
@@ -179,8 +179,8 @@ export default function SearchBar({ onAdd, existingNames }: Props) {
                   className="h-11 w-11 shrink-0 rounded-lg object-cover"
                 />
               ) : (
-                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-slate-100">
-                  <svg className="h-5 w-5 text-slate-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-slate-100 dark:bg-slate-700">
+                  <svg className="h-5 w-5 text-slate-300 dark:text-slate-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2M7 2v20M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3v5" />
                   </svg>
                 </div>
@@ -200,7 +200,7 @@ export default function SearchBar({ onAdd, existingNames }: Props) {
                     disabled={inList}
                     className={`shrink-0 rounded-lg px-3 py-1.5 text-sm font-medium transition-[transform,background-color] duration-150 active:scale-[0.95] disabled:cursor-default ${
                       inList
-                        ? "bg-slate-100 text-slate-400"
+                        ? "bg-slate-100 text-slate-400 dark:bg-slate-700 dark:text-slate-500"
                         : "bg-brand text-white pointer-fine:hover:bg-brand-dark"
                     }`}
                   >

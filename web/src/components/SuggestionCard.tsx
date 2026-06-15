@@ -18,7 +18,7 @@ export default function SuggestionCard({
 
   return (
     <div
-      className={`flex gap-3 rounded-xl border border-slate-200 bg-white p-3 shadow-sm transition-[opacity,box-shadow] duration-300 pointer-fine:hover:shadow-md ${
+      className={`flex gap-3 rounded-xl border border-slate-200 bg-white p-3 shadow-sm dark:border-slate-700 dark:bg-slate-800 dark:shadow-none transition-[opacity,box-shadow] duration-300 pointer-fine:hover:shadow-md dark:pointer-fine:hover:shadow-none ${
         s.is_buried ? "opacity-50" : "opacity-100"
       }`}
     >
@@ -29,8 +29,8 @@ export default function SuggestionCard({
           className="h-16 w-16 shrink-0 rounded-lg object-cover"
         />
       ) : (
-        <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-lg bg-slate-100">
-          <svg className="h-6 w-6 text-slate-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-lg bg-slate-100 dark:bg-slate-700">
+          <svg className="h-6 w-6 text-slate-300 dark:text-slate-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
             <path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2M7 2v20M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3v5" />
           </svg>
         </div>
@@ -44,10 +44,10 @@ export default function SuggestionCard({
         )}
 
         <div className="mt-2 flex items-center justify-between gap-1">
-          <span className="text-xs text-slate-400">
+          <span className="text-xs text-slate-400 dark:text-slate-500">
             by {s.added_by_name}
             {s.is_buried && (
-              <span className="ml-1 rounded-full bg-slate-100 px-1.5 py-0.5 text-slate-400">
+              <span className="ml-1 rounded-full bg-slate-100 px-1.5 py-0.5 text-slate-400 dark:bg-slate-700 dark:text-slate-500">
                 buried
               </span>
             )}
@@ -55,19 +55,19 @@ export default function SuggestionCard({
 
           <div className="flex items-center gap-1">
             {/* Vote group: ▲ score ▼ */}
-            <div className="flex items-center rounded-lg bg-slate-100">
+            <div className="flex items-center rounded-lg bg-slate-100 dark:bg-slate-700">
               <button
                 aria-label="Upvote"
                 onClick={() => onVote(1)}
                 className={`rounded-lg px-2 py-1 text-sm transition-[transform,background-color,color] duration-150 active:scale-[0.95] ${
                   s.my_vote === 1
                     ? "bg-emerald-500 text-white"
-                    : "text-slate-500 pointer-fine:hover:bg-slate-200 pointer-fine:hover:text-slate-700"
+                    : "text-slate-500 pointer-fine:hover:bg-slate-200 pointer-fine:hover:text-slate-700 dark:text-slate-400 dark:pointer-fine:hover:bg-slate-600 dark:pointer-fine:hover:text-slate-200"
                 }`}
               >
                 ▲
               </button>
-              <span className="w-6 select-none text-center text-xs font-bold tabular-nums text-slate-600">
+              <span className="w-6 select-none text-center text-xs font-bold tabular-nums text-slate-600 dark:text-slate-300">
                 {voteLabel}
               </span>
               <button
@@ -76,7 +76,7 @@ export default function SuggestionCard({
                 className={`rounded-lg px-2 py-1 text-sm transition-[transform,background-color,color] duration-150 active:scale-[0.95] ${
                   s.my_vote === -1
                     ? "bg-rose-500 text-white"
-                    : "text-slate-500 pointer-fine:hover:bg-slate-200 pointer-fine:hover:text-slate-700"
+                    : "text-slate-500 pointer-fine:hover:bg-slate-200 pointer-fine:hover:text-slate-700 dark:text-slate-400 dark:pointer-fine:hover:bg-slate-600 dark:pointer-fine:hover:text-slate-200"
                 }`}
               >
                 ▼
@@ -93,7 +93,7 @@ export default function SuggestionCard({
             <button
               aria-label="Remove"
               onClick={onRemove}
-              className="rounded-lg p-1.5 text-slate-300 transition-[transform,background-color,color] duration-150 active:scale-[0.95] pointer-fine:hover:bg-rose-50 pointer-fine:hover:text-rose-500"
+              className="rounded-lg p-1.5 text-slate-300 dark:text-slate-600 transition-[transform,background-color,color] duration-150 active:scale-[0.95] pointer-fine:hover:bg-rose-50 pointer-fine:hover:text-rose-500 dark:pointer-fine:hover:bg-rose-900/20 dark:pointer-fine:hover:text-rose-400"
             >
               <svg className="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
                 <path d="M18 6 6 18M6 6l12 12" />

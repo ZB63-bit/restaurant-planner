@@ -43,12 +43,12 @@ export default function JoinPage({ data }: { data: RoomData }) {
   }
 
   const field =
-    "w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-brand focus:outline-none";
+    "w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-brand focus:outline-none dark:border-slate-600 dark:bg-slate-800 dark:text-slate-100";
   const tab = (m: Mode) =>
     `flex-1 rounded-lg py-2 text-sm font-medium transition-colors duration-150 active:scale-[0.97] ${
       mode === m
         ? "bg-brand text-white"
-        : "bg-slate-100 text-slate-600 pointer-fine:hover:bg-slate-200"
+        : "bg-slate-100 text-slate-600 pointer-fine:hover:bg-slate-200 dark:bg-slate-700 dark:text-slate-300 dark:pointer-fine:hover:bg-slate-600"
     }`;
 
   return (
@@ -56,7 +56,7 @@ export default function JoinPage({ data }: { data: RoomData }) {
       <h1 className="mb-1 text-center text-2xl font-bold text-brand">
         Restaurant Planner
       </h1>
-      <p className="mb-6 text-center text-sm text-slate-500">
+      <p className="mb-6 text-center text-sm text-slate-500 dark:text-slate-400">
         Plan where to eat, together.
       </p>
 
@@ -93,7 +93,7 @@ export default function JoinPage({ data }: { data: RoomData }) {
         )}
 
         {error && (
-          <p className="rounded-lg bg-rose-50 px-3 py-2 text-sm text-rose-600">
+          <p className="rounded-lg bg-rose-50 px-3 py-2 text-sm text-rose-600 dark:bg-rose-900/20 dark:text-rose-400">
             {error}
           </p>
         )}
