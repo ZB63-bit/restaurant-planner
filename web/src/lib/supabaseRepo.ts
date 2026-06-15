@@ -156,6 +156,13 @@ export class SupabaseRepo implements Repo {
     return (data as Member[]) ?? [];
   }
 
+  async moveMemberToRoom(memberId: string, roomId: string, displayName: string): Promise<void> {
+    await db().from("members").upsert(
+      { id: memberId, room_id: roomId, display_name: displayName },
+      { onConflict: "id" },
+    );
+  }
+
   // --- Suggestions ---
   async listSuggestions(roomId: string): Promise<Suggestion[]> {
     const { data } = await db()

@@ -191,6 +191,17 @@ export class LocalStorageRepo implements Repo {
     return read<Member>(KEYS.members).filter((m) => m.room_id === roomId);
   }
 
+  async moveMemberToRoom(memberId: string, roomId: string, displayName: string): Promise<void> {
+    // localStorage already supports multiple member rows per device — just
+    // ensure a row exists for this room without removing the others.
+    const members = read<Member>(KEYS.members);
+    const existing = members.find((m) => m.id === memberId && m.room_id === roomId);
+    if (!existing) {
+      members.push({ id: memberId, room_id: roomId, display_name: displayName, joined_at: new Date().toISOString() });
+      write(KEYS.members, members);
+    }
+  }
+
   // --- Suggestions ---
   async listSuggestions(roomId: string): Promise<Suggestion[]> {
     return read<Suggestion>(KEYS.suggestions).filter(

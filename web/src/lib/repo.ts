@@ -64,6 +64,8 @@ export interface Repo {
 
   // --- Members ---
   listMembers(roomId: string): Promise<Member[]>;
+  /** Move this device's member record to a different room (for room switching). */
+  moveMemberToRoom(memberId: string, roomId: string, displayName: string): Promise<void>;
 
   // --- Suggestions ---
   listSuggestions(roomId: string): Promise<Suggestion[]>;

@@ -149,10 +149,11 @@ export function useRoomData() {
     setRoomId(null);
   }, []);
 
-  const switchRoom = useCallback((id: string) => {
+  const switchRoom = useCallback(async (id: string) => {
+    await repo.moveMemberToRoom(userId, id, getDisplayName());
     persistRoomId(id);
     setRoomId(id);
-  }, []);
+  }, [userId]);
 
   // --- Derived views ---
 
