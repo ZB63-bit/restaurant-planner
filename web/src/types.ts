@@ -68,6 +68,7 @@ export interface ScheduleSlot {
   slot: Slot;
   suggestion_id: string;
   is_visited: boolean;
+  reservation_time: string | null; // "HH:MM" 24-hour, e.g. "18:30"
 }
 
 export interface HistoryEntry {

@@ -247,6 +247,7 @@ export class SupabaseRepo implements Repo {
     day: DayOfWeek,
     slot: Slot,
     suggestionId: string,
+    time: string | null,
   ): Promise<void> {
     await db()
       .from("schedule")
@@ -257,6 +258,7 @@ export class SupabaseRepo implements Repo {
           slot,
           suggestion_id: suggestionId,
           is_visited: false,
+          reservation_time: time,
         },
         { onConflict: "room_id,day_of_week,slot" },
       );

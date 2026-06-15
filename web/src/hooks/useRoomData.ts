@@ -221,9 +221,9 @@ export function useRoomData() {
         await repo.removeSuggestion(suggestionId);
         await reload();
       },
-      assignToSlot: async (day: DayOfWeek, slot: Slot, suggestionId: string) => {
+      assignToSlot: async (day: DayOfWeek, slot: Slot, suggestionId: string, time: string | null) => {
         if (!roomId) return;
-        await repo.assignToSlot(roomId, day, slot, suggestionId);
+        await repo.assignToSlot(roomId, day, slot, suggestionId, time);
         await reload();
         const name = data.suggestions.find((s) => s.id === suggestionId)?.name ?? "A restaurant";
         const day2 = day.charAt(0).toUpperCase() + day.slice(1);

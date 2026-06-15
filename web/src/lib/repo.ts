@@ -97,6 +97,7 @@ export interface Repo {
     day: DayOfWeek,
     slot: Slot,
     suggestionId: string,
+    time: string | null,
   ): Promise<void>;
   clearSlot(roomId: string, day: DayOfWeek, slot: Slot): Promise<void>;
   /** Mark a scheduled slot visited and copy a snapshot into history. */

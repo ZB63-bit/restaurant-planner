@@ -2,6 +2,11 @@ import type { RoomData } from "../App";
 import type { DayOfWeek, Slot, ScheduleSlotWithSuggestion } from "../types";
 import { Meta } from "../components/MetaBits";
 
+function formatTime(t: string): string {
+  const [h, m] = t.split(":").map(Number);
+  return `${h - 12}:${m.toString().padStart(2, "0")} PM`;
+}
+
 function SlotView({
   label,
   data,
@@ -38,6 +43,11 @@ function SlotView({
       <div className="flex items-center justify-between">
         <span className="text-xs font-medium uppercase tracking-wide text-slate-400 dark:text-slate-500">
           {label}
+          {entry.reservation_time && (
+            <span className="ml-2 normal-case tracking-normal text-brand">
+              {formatTime(entry.reservation_time)}
+            </span>
+          )}
         </span>
         {entry.is_visited && (
           <span className="text-xs font-semibold text-emerald-600 dark:text-emerald-400">✓ Visited</span>

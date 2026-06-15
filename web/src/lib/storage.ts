@@ -298,6 +298,7 @@ export class LocalStorageRepo implements Repo {
     day: DayOfWeek,
     slot: Slot,
     suggestionId: string,
+    time: string | null,
   ): Promise<void> {
     const schedule = read<ScheduleSlot>(KEYS.schedule);
     // One suggestion per (day, slot): clear any existing occupant first.
@@ -311,6 +312,7 @@ export class LocalStorageRepo implements Repo {
       slot,
       suggestion_id: suggestionId,
       is_visited: false,
+      reservation_time: time,
     });
     write(KEYS.schedule, filtered);
     // The suggestion row stays alive (the schedule slot references it); the

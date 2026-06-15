@@ -25,9 +25,9 @@ function EmptySuggestions() {
 export default function SuggestionsPage({ data }: { data: RoomData }) {
   const [assigning, setAssigning] = useState<SuggestionWithVote | null>(null);
 
-  async function handleAssign(day: DayOfWeek, slot: Slot) {
+  async function handleAssign(day: DayOfWeek, slot: Slot, time: string) {
     if (!assigning) return;
-    await data.assignToSlot(day, slot, assigning.id);
+    await data.assignToSlot(day, slot, assigning.id, time);
     setAssigning(null);
   }
 

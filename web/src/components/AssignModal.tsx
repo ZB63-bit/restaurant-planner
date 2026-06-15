@@ -1,15 +1,32 @@
+import { useState } from "react";
 import type { DayOfWeek, Slot, SuggestionWithVote } from "../types";
 import { DAYS_OF_WEEK } from "../types";
 
 interface Props {
   suggestion: SuggestionWithVote;
-  onAssign: (day: DayOfWeek, slot: Slot) => void;
+  onAssign: (day: DayOfWeek, slot: Slot, time: string) => void;
   onClose: () => void;
 }
 
 const dayLabel = (d: DayOfWeek) => d.charAt(0).toUpperCase() + d.slice(1, 3);
 
+// 5:00 PM – 8:00 PM in 15-minute increments stored as "HH:MM" (24-hour).
+const TIME_OPTIONS: { value: string; label: string }[] = [];
+for (let h = 17; h <= 20; h++) {
+  for (let m = 0; m < 60; m += 15) {
+    if (h === 20 && m > 0) break;
+    const value = `${h.toString().padStart(2, "0")}:${m.toString().padStart(2, "0")}`;
+    const displayH = h - 12;
+    const label = `${displayH}:${m.toString().padStart(2, "0")} PM`;
+    TIME_OPTIONS.push({ value, label });
+  }
+}
+
+const DEFAULT_TIME = "18:00"; // 6:00 PM
+
 export default function AssignModal({ suggestion, onAssign, onClose }: Props) {
+  const [time, setTime] = useState(DEFAULT_TIME);
+
   return (
     <div
       className="fixed inset-0 z-50 flex items-end justify-center bg-black/40 sm:items-center"
@@ -19,10 +36,34 @@ export default function AssignModal({ suggestion, onAssign, onClose }: Props) {
         className="w-full max-w-md rounded-t-2xl bg-white p-4 shadow-xl sm:rounded-2xl dark:bg-slate-800"
         onClick={(e) => e.stopPropagation()}
       >
-        <h2 className="mb-1 text-lg font-bold">Schedule “{suggestion.name}”</h2>
+        <h2 className="mb-1 text-lg font-bold">Schedule "{suggestion.name}"</h2>
         <p className="mb-4 text-sm text-slate-500 dark:text-slate-400">
-          Pick a day and slot. This removes it from the queue.
+          Pick a time and day. This removes it from the queue.
         </p>
+
+        {/* Time picker */}
+        <div className="mb-4">
+          <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">
+            Dinner time
+          </label>
+          <div className="flex flex-wrap gap-2">
+            {TIME_OPTIONS.map((opt) => (
+              <button
+                key={opt.value}
+                onClick={() => setTime(opt.value)}
+                className={`rounded-lg px-3 py-1.5 text-sm font-medium transition-colors duration-100 ${
+                  time === opt.value
+                    ? "bg-brand text-white"
+                    : "bg-slate-100 text-slate-600 pointer-fine:hover:bg-slate-200 dark:bg-slate-700 dark:text-slate-300 dark:pointer-fine:hover:bg-slate-600"
+                }`}
+              >
+                {opt.label}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Day + slot grid */}
         <div className="space-y-2">
           {DAYS_OF_WEEK.map((day) => (
             <div key={day} className="flex items-center gap-2">
@@ -30,13 +71,13 @@ export default function AssignModal({ suggestion, onAssign, onClose }: Props) {
                 {dayLabel(day)}
               </span>
               <button
-                onClick={() => onAssign(day, "primary")}
+                onClick={() => onAssign(day, "primary", time)}
                 className="flex-1 rounded-lg bg-brand/10 py-2 text-sm font-medium text-brand hover:bg-brand/20"
               >
                 Primary
               </button>
               <button
-                onClick={() => onAssign(day, "backup")}
+                onClick={() => onAssign(day, "backup", time)}
                 className="flex-1 rounded-lg bg-slate-100 py-2 text-sm font-medium text-slate-600 hover:bg-slate-200 dark:bg-slate-700 dark:text-slate-300 dark:hover:bg-slate-600"
               >
                 Backup
@@ -44,6 +85,7 @@ export default function AssignModal({ suggestion, onAssign, onClose }: Props) {
             </div>
           ))}
         </div>
+
         <button
           onClick={onClose}
           className="mt-4 w-full rounded-lg border border-slate-300 py-2 text-sm text-slate-600 dark:border-slate-600 dark:text-slate-300"
