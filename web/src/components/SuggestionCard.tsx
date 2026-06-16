@@ -3,6 +3,7 @@ import { Meta } from "./MetaBits";
 
 interface Props {
   suggestion: SuggestionWithVote;
+  isScheduled?: boolean;
   onVote: (value: 1 | -1) => void;
   onRemove: () => void;
   onSchedule: () => void;
@@ -10,6 +11,7 @@ interface Props {
 
 export default function SuggestionCard({
   suggestion: s,
+  isScheduled,
   onVote,
   onRemove,
   onSchedule,
@@ -37,7 +39,14 @@ export default function SuggestionCard({
       )}
 
       <div className="min-w-0 flex-1">
-        <h3 className="truncate font-semibold">{s.name}</h3>
+        <div className="flex min-w-0 items-center gap-1.5">
+          <h3 className="truncate font-semibold">{s.name}</h3>
+          {isScheduled && (
+            <span className="shrink-0 rounded-full bg-brand/10 px-1.5 py-0.5 text-xs font-medium text-brand dark:bg-brand/20">
+              On schedule
+            </span>
+          )}
+        </div>
         <Meta cuisine={s.cuisine} rating={s.google_rating} price={s.price_level} />
         {s.address && (
           <p className="truncate text-xs text-slate-400">{s.address}</p>

@@ -54,6 +54,7 @@ export default function SuggestionsPage({ data }: { data: RoomData }) {
           >
             <SuggestionCard
               suggestion={s}
+              isScheduled={data.scheduledIds.has(s.id)}
               onVote={(value) => data.castVote(s.id, value)}
               onRemove={() => data.removeSuggestion(s.id)}
               onSchedule={() => setAssigning(s)}

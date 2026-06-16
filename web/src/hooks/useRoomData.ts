@@ -179,14 +179,13 @@ export function useRoomData() {
         .map((v) => [v.suggestion_id, v.value]),
     );
     return data.suggestions
-      .filter((s) => !scheduledIds.has(s.id))
       .map((s) => ({
         ...s,
         my_vote: (myVotes.get(s.id) ?? 0) as 1 | -1 | 0,
         added_by_name: memberName(s.added_by),
       }))
       .sort(sortQueue);
-  }, [data.suggestions, data.votes, scheduledIds, userId, memberName]);
+  }, [data.suggestions, data.votes, userId, memberName]);
 
   const scheduleByDay = useMemo(() => {
     const byKey = new Map<string, ScheduleSlotWithSuggestion>();
@@ -254,6 +253,7 @@ export function useRoomData() {
     history: data.history,
     queue,
     scheduleByDay,
+    scheduledIds,
     suggestionNames,
     userId,
     displayName,
